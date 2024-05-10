@@ -15,7 +15,7 @@ services:
   user-api:
     container_name: cuser-service
     build:
-      context: ../user-service
+      context: ../user-service-1
     ports:
     - "5001:5001"
     depends_on:
@@ -28,20 +28,21 @@ services:
     container_name: cuser_dbase
     image: postgres:latest
     ports:
-    - "32000:5432"
+    - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
+      POSTGRES_USER: postgres1
       POSTGRES_PASSWORD: Mango42
       POSTGRES_DB: user
     networks:
       - micro_network
     volumes:
     - userdb_vol:/var/lib/postgresql/data
+    - ./initdb-user.sql:/docker-entrypoint-initdb.d/initdb-user.sql
 
   product-api:
     container_name: cproduct-service
     build:
-      context: ../product-service
+      context: ../product-service-2
     ports:
     - "5002:5002"
     depends_on:
@@ -54,20 +55,22 @@ services:
     container_name: cproduct_dbase
     image: postgres:latest
     ports:
-    - "32001:5432"
+    - "5433:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Mango42
+      POSTGRES_USER: postgres2
+      POSTGRES_PASSWORD: Mango43
       POSTGRES_DB: product
     networks:
       - micro_network
     volumes:
     - productdb_vol:/var/lib/postgresql/data
+    - ./initdb-product.sql:/docker-entrypoint-initdb.d/initdb-product.sql
+
 
   order-api:
     container_name: corder-service
     build:
-      context: ../order-service
+      context: ../order-service-3
     ports:
     - "5003:5003"
     depends_on:
@@ -80,15 +83,16 @@ services:
     container_name: corder_dbase
     image: postgres:latest
     ports:
-    - "32002:5432"
+    - "5434:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Mango42
+      POSTGRES_USER: postgres3
+      POSTGRES_PASSWORD: Mango44
       POSTGRES_DB: order
     networks:
       - micro_network
     volumes:
     - orderdb_vol:/var/lib/postgresql/data
+    - ./initdb-order.sql:/docker-entrypoint-initdb.d/initdb-order.sql
 
   frontend-app:
     container_name: cfrontend-app
