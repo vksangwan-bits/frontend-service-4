@@ -1,9 +1,10 @@
+# frontend-app-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend-app
@@ -14,6 +15,6 @@ spec:
     spec:
       containers:
       - name: frontend-app
-        image: frontend-app
+        image: vksan9/frontend-app:latest
         ports:
         - containerPort: 5000

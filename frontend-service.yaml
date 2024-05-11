@@ -1,11 +1,12 @@
+# frontend-app-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-service
+  name: frontend-app
 spec:
-  selector:
-    app: frontend-app
   ports:
   - port: 5000
     targetPort: 5000
-  type: LoadBalancer
+  selector:
+    app: frontend-app
+  type: NodePort
